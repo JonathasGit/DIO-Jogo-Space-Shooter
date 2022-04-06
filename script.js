@@ -42,3 +42,24 @@ function moveDown() {
 }
 
 window.addEventListener('keydown', flyShip); // PAra iniciar o jogo 
+
+
+
+//funcionalidade de tiro - 3 funções para isso
+//criar o nosso laser   (dentro da nossa area)
+function fireLaser() { 
+    let laser = createLaserElement();
+    playArea.appendChild(laser); 
+    moveLaser(laser); //movimento do tiro
+}
+// criar o elemento = criar a imagem do tiro 
+function createLaserElement() {
+    let xPosition = parseInt(window.getComputedStyle(yourShip).getPropertyValue('left'));//horizontal
+    let yPosition = parseInt(window.getComputedStyle(yourShip).getPropertyValue('top'));
+    let newLaser = document.createElement('img');
+    newLaser.src = 'imagens/shoot.png';
+    newLaser.classList.add('laser');
+    newLaser.style.left = `${xPosition}px`;
+    newLaser.style.top = `${yPosition - 10}px`; // para ficar no meio da nave
+    return newLaser;
+}
