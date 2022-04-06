@@ -100,3 +100,70 @@ function createAliens() {
     playArea.appendChild(newAlien);
     moveAlien(newAlien);
 }
+
+//função para movimentar os inimigos
+function moveAlien(alien) {
+    let moveAlienInterval = setInterval(() => {
+        let xPosition = parseInt(window.getComputedStyle(alien).getPropertyValue('left'));
+        if(xPosition <= 50) {
+            if(Array.from(alien.classList).includes('dead-alien')) {
+                alien.remove();
+            } else {
+                gameOver();
+            }
+        } else {
+            alien.style.left = `${xPosition - 4}px`;
+        }
+    }, 30);
+}
+
+
+
+//função para  colisão
+function checkLaserCollision(laser, alien) {
+    let laserTop = parseInt(laser.style.top);
+    let laserLeft = parseInt(laser.style.left);
+    let laserBottom = laserTop - 20;
+    let alienTop = parseInt(alien.style.top);
+    let alienLeft = parseInt(alien.style.left);
+    let alienBottom = alienTop - 30;
+    if(laserLeft != 340 && laserLeft + 40 >= alienLeft) {
+        if(laserTop <= alienTop && laserTop >= alienBottom) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+//inicio do jogo
+startButton.addEventListener('click', (event) => {
+    playGame();
+})
+
+function playGame() {
+    startButton.style.display = 'none';
+    instructionsText.style.display = 'none';
+    window.addEventListener('keydown', flyShip);
+    alienInterval = setInterval(() => {
+        createAliens();
+    }, 2000);
+}
+
+//função de game over
+function gameOver() {
+    window.removeEventListener('keydown', flyShip);
+    clearInterval(alienInterval);
+    let aliens = document.querySelectorAll('.alien');
+    aliens.forEach((alien) => alien.remove());
+    let lasers = document.querySelectorAll('.laser');
+    lasers.forEach((laser) => laser.remove());
+    setTimeout(() => {
+        alert('game over!');
+        yourShip.style.top = "250px";
+        startButton.style.display = "block";
+        instructionsText.style.display = "block";
+    });
+}
