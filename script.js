@@ -29,3 +29,16 @@ function moveUp() {
     }
 }
 
+//função de descer a nave
+function moveDown() {
+    let topPosition = getComputedStyle(yourShip).getPropertyValue('top');
+    if(topPosition === "510px"){
+        return
+    } else {
+        let position = parseInt(topPosition); // criar denovo a variavel, porque está em outro bloco de código
+        position += 50;
+        yourShip.style.top = `${position}px`;
+    }
+}
+
+window.addEventListener('keydown', flyShip); // PAra iniciar o jogo 
