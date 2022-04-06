@@ -63,3 +63,24 @@ function createLaserElement() {
     newLaser.style.top = `${yPosition - 10}px`; // para ficar no meio da nave
     return newLaser;
 }
+// movimentar o laser na tela 
+function moveLaser(laser) {
+    let laserInterval = setInterval(() => { // intervalo para surgir outro laser
+        let xPosition = parseInt(laser.style.left);
+        let aliens = document.querySelectorAll('.alien');
+
+        aliens.forEach((alien) => { //comparando se cada alien foi atingido, se sim, troca o src da imagem
+            if(checkLaserCollision(laser, alien)) {
+                alien.src = 'img/explosion.png';
+                alien.classList.remove('alien');
+                alien.classList.add('dead-alien');
+            }
+        })
+
+        if(xPosition === 340) {
+            laser.remove();
+        } else {
+            laser.style.left = `${xPosition + 8}px`;
+        }
+    }, 10);
+}
