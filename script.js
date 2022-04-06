@@ -1,5 +1,6 @@
 const yourShip = document.querySelector('.player-shooter');
 const playArea = document.querySelector('#main-play-area');
+const aliensImg = ['imagens/monster-1.png', 'imagens/monster-2.png', 'imagens/monster-3.png'];
 
 //movimento e tiro da nave do jogador
 // para prever os moviemntos, a cada teclada
@@ -83,4 +84,19 @@ function moveLaser(laser) {
             laser.style.left = `${xPosition + 8}px`;
         }
     }, 10);
+}
+
+
+
+//função Criar os inimigos
+function createAliens() {
+    let newAlien = document.createElement('img');
+    let alienSprite = aliensImg[Math.floor(Math.random() * aliensImg.length)]; //sorteio de imagens
+    newAlien.src = alienSprite; //sorteia o numero
+    newAlien.classList.add('alien');
+    newAlien.classList.add('alien-transition');
+    newAlien.style.left = '370px';
+    newAlien.style.top = `${Math.floor(Math.random() * 330) + 30}px`; //gerar numero aleatorio
+    playArea.appendChild(newAlien);
+    moveAlien(newAlien);
 }
